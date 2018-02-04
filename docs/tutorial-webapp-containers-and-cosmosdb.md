@@ -108,5 +108,7 @@ Alternatively, you can create web app by running the following script:
 scripts/webapp-update-settings.sh
 ```
 
-
-
+Finally, access and test the web app:
+```
+curl https://<APP_NAME>.azurewebsites.net
+```
