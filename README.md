@@ -15,7 +15,7 @@ MEAN Stack App Conatiner Demos using Azure Container related services and PaaS
 
 ![](images/webapp-container-cosmosdb.png)
 
-- [Running MEAN Stack App Container in Azure using Web App for Containers and Cosmos DB](docs/tutorial-webapp-containers-and-cosmosdb.md)
+- [Tutorial: Web App for Containers + Cosmos DB](docs/tutorial-webapp-containers-and-cosmosdb.md)
 
 ## ACS Engine + Kubernetes
 K8S cluster architecture deployed with acs-engine
