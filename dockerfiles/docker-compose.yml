@@ -4,11 +4,12 @@ services:
     restart: always
     image: mean-demo:0.0.1
     ports:
+     - "8080:80"
      - "4200:4200"
      - "3000:3000"
      - "2222:2222"
     environment:
-     - MONGODB_URI=mongodb://db:27017/meandemo
+     - MONGODB_URI=mongodb://db:27017/mean
     depends_on:
      - db
   db:

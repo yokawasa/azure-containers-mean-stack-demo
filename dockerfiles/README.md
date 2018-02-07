@@ -15,12 +15,12 @@ $ docker-compose -f docker-compose.yml up
 ```
 Access to app page
 ```
-open http://localhost:4200
+open http://localhost:8080
 ```
 
 ## Push the image to Continer registory
 ```
 $ ./push.sh [dockerhub account] [dockerhub password] [imageid]
 ex)
-$ ./push.sh yoichikawasaki asdba3337 mean-demo:0.0.1
+$ ./push.sh <dockeruser> <pass> mean-demo:0.0.1
 ```

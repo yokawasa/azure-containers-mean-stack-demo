@@ -1,0 +1,8 @@
+
+
+https://github.com/avatsaev/angular4-docker-example
+https://github.com/avatsaev/angular4-docker-example/blob/master/Dockerfile
+
+reverse proxyのアイデアについて
+https://www.digitalocean.com/community/questions/how-do-i-setup-the-mean-stack-for-production
+https://heartbeats.jp/hbblog/2012/04/nginx05.html

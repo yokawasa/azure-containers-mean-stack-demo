@@ -1,17 +1,18 @@
-#  Create a new image from the base nodejs 7 image.
-FROM node:8.1.2
+#  Create a new image from ningx image.
+FROM nginx
 
 MAINTAINER Yoichi Kawasaki <yoichi.kawasaki@outlook.com>
 
+RUN apt-get update \
+  && apt-get install --assume-yes --no-install-recommends \
+    apt-transport-https build-essential bzip2 curl git rlwrap vim \
+  && apt-get install -y --no-install-recommends openssh-server \
+  && curl -sL https://deb.nodesource.com/setup_6.x | bash - \
+  && apt-get install --assume-yes --no-install-recommends nodejs \
+  && apt-get clean
+
 # ENV setup
 ENV SSH_PASSWD "root:Docker!"
-
-COPY docker-entrypoint.sh /bin/
-COPY sshd_config /etc/ssh/
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends openssh-server vim \
-    && rm -rf /var/lib/apt/lists/*
 
 # Download mean app
 # You can use .dockerignore to exlcude files. Works just as .gitignore does.
@@ -21,21 +22,32 @@ RUN set -ex \
     && mv angular4-mean-starter /opt/meanapp
 
 RUN chmod -R 777 /opt/meanapp \
-    && echo "root:Docker!" | chpasswd \
-    && chmod 755 /bin/docker-entrypoint.sh
+    && echo $SSH_PASSWD | chpasswd \
+    && useradd -ms /bin/bash node
 
+# Install node packages and build as node user
 USER node
-
 RUN cd /opt/meanapp \
-  && npm install
-
+  && npm install \
+  && npm run build 
+# Switch back as root user
 USER root
 
-# 80 = HTTP, 443 = HTTPS, 4200 = Angular, 3000 = Node.JS/Express, 2222 = SSH
-EXPOSE 4200 3000 2222
+# Copy our default nginx config
+COPY nginx/default.conf.templ /tmp/
+COPY docker-entrypoint.sh /bin/
+COPY sshd_config /etc/ssh/
+
+# Final clean up & configurations
+RUN rm -rf /usr/share/nginx/html/* \
+    && mv /opt/meanapp/public/dist/* /usr/share/nginx/html/ \
+    && chmod 755 /bin/docker-entrypoint.sh 
+
+# 80 = HTTP, 4200 = Angular (testing), 3000 = Node.JS/Express, 2222 = SSH
+EXPOSE 80 443 4200 3000 2222
 
 # Set the created directory as the working directory
 WORKDIR /opt/meanapp
 
-# Start the application. This is the same as running ng serve.
+# Start the application. 
 ENTRYPOINT ["/bin/docker-entrypoint.sh"]

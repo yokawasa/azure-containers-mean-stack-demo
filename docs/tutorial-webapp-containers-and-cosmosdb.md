@@ -81,6 +81,16 @@ docker logout
 
 ## Setep Web App and Run the app
 
+### Create App service plan (if not yet created)
+
+You need an App Service plan in the Standard pricing tier (--sku S1) and in a Linux container (--is-linux) in order to create an account for Web App for Container.
+```
+az appservice plan create \
+  --name $APP_PLAN \
+  --resource-group $RESOURCE_GROUP \
+  --sku S1 --is-linux
+```
+
 ### Create Web APP
 ```
 # Create Web App for Container
