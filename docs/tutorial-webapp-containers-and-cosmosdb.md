@@ -90,6 +90,10 @@ az appservice plan create \
   --resource-group $RESOURCE_GROUP \
   --sku S1 --is-linux
 ```
+Alternatively, you can create the plan by running the following script:
+```
+scripts/app-service-plan-create.sh
+```
 
 ### Create Web APP
 ```
